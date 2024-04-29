@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Location Tracker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    #container {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .input-container {
+      margin-top: 10px;
+    }
+
+    input[type="text"], input[type="button"] {
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+
+    input[type="button"] {
+      background-color: #2df848;
+      color: rgb(133, 5, 5);
+      border: none;
+      cursor: pointer;
+    }
+
+    input[type="button"]:hover {
+      background-color: #45a049;
+    }
+
+    a {
+      text-decoration: none;
+      color: #190d86;
+    }
+
+    a:hover {
+      color: #0c3050;
+    }
+
+    /* Added CSS for styling */
+    h1 {
+      color: #333;
+    }
+
+    hr {
+      border: 1px solid #ccc;
+      margin: 20px 0;
+    }
+
+    /* Note styling */
+    .note {
+      font-size: 14px;
+      color: #555;
+      margin-top: 10px;
+    }
+
+    /* Footer styling */
+    footer {
+      margin-top: 20px;
+      text-align: center;
+      color: #312525;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Location Tracker</h1>
+    <div class="input-container">
+      <label for="txtLat">Latitude :</label>
+      <input type="text" id="txtLat" readonly>
+      <label for="txtLon">Longitude :</label>
+      <input type="text" id="txtLon" readonly>
+      <input type="button" value="Get My Location" onclick="GetLocation()">
+    </div>
+    <hr>
+    <div id="container"></div>
+    <div class="note">
+      Note: In case if you are getting incorrect location somehow, change the Wi-Fi or reconnect it and then try again, it will work.
+    </div>
+    <footer>-- Made by Safin :) </footer>
+  </div>
+
+  <script>
+    function GetLocation() {
+      navigator.geolocation.getCurrentPosition(onsuccess, onfailure);
+    }
+
+    function onsuccess(reply) {
+      var refToTxtLat = document.getElementById("txtLat");
+      var refToTxtLon = document.getElementById("txtLon");
+
+      refToTxtLat.value = reply.coords.latitude;
+      refToTxtLon.value = reply.coords.longitude;
+
+      var refToContainer = document.getElementById("container");
+      var url = `https://www.latlong.net/c/?lat=${refToTxtLat.value}&long=${refToTxtLon.value}`;
+
+      var anchor = `<a href="${url}" target="_blank">Track yourself on map!! click here </a>`;
+
+      refToContainer.innerHTML = anchor;
+    }
+
+    function onfailure() {
+      alert("Something went wrong!");
+    }
+  </script>
+</body>
+</html>
